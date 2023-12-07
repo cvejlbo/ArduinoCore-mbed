@@ -101,8 +101,9 @@ public:
    int poll(void);
 
    // Extract data from the holding tank.
+   int extractStart(void);
    int extractData(uint8_t *data, unsigned int *len);
-
+   int waitForAudio(void);
 
    // passed to uilib, used for all SPI transfers such as in loadLog and poll
    static int spiTransfer(void *d, int mcu, uint32_t address, void *_out,
@@ -118,8 +119,6 @@ public:
    static int unsync(void *d);
    static int mbwait(void *d);
    static int get_type(void *d, unsigned int *type);
-
-   int getAudioChunkSize(void);
 
 public:
    static const PinName NDP_CS = p31;
@@ -149,6 +148,7 @@ private:
    void interrupt_handler();
    int enable_interrupts(bool on);
    int checkMB();
+   int configureClockandCheckSystem();
 
    bool _initialized = false;
    bool _int_pin_enabled = false;
@@ -164,7 +164,8 @@ private:
    char label_data[LABELS_STRING_LEN] = "";
    char *labels[MAX_LABELS];
 
-   unsigned int audio_sample_chunk_size = 0;
+   uint32_t sample_size = 768;
+
 };
 
 extern NDPClass NDP;
