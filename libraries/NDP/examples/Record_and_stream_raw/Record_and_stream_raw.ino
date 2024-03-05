@@ -18,7 +18,7 @@
   channels-> single / sample rate-> 16 kHz
 
   NOTE: The recording may come out noisy or unwieldy due to the extraction 
-  starting 1 bit late/early. 
+  starting 1 byte late/early. 
   To fix this try:
      dd if=test.pcm of=test_fix.pcm bs=1 skip=1
 */
